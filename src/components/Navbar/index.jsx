@@ -14,13 +14,14 @@ import { NavMenu } from './NavMenu'
 import { useNavMenuContext } from '../../context/NavMenu'
 import { CartDrawer } from '../Cart/CartDrawer'
 import {useCartDrawer } from '../../context/CartDrawer'
+import { useProductsContext } from '../../context/Products'
 
 export const Navbar = () => {
   const navigate = useNavigate()
   let isPageWide = useMediaQuery('(max-width: 884px)')
   const [openNavMenu, setOpenNavMenu] = useNavMenuContext()
   const [openCartDrawer, setOpenCartDrawer] = useCartDrawer()
-
+  const [state] = useProductsContext()
 
   return (
     <Container>
@@ -51,7 +52,7 @@ export const Navbar = () => {
         <Nav.Column>
           <Icons>
             <Stack spacing={2} direction="row">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={state?.cartItems?.length} color="secondary">
                 <ShoppingBasketIcon onClick={() => setOpenCartDrawer(!openCartDrawer)} color="action" />
               </Badge>
               <PersonOutlineIcon onClick={() => navigate('/login')} color="action" />

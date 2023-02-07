@@ -4,18 +4,18 @@ import { reducer } from "./reducer";
 
 const ProductsContext = createContext()
 
-export const useProductsContext = () => useContext(ProductsContext)
+export const useProductsContext = () => useContext(ProductsContext);
 
-const initialState = {
-  data: products | [],
+const initialState = JSON.parse(localStorage.getItem('data')) || {
+  data: products,
   cartItems: [],
   wishlist: []
 }
 
 
 const ProductContextProvider = ({children}) => {
-  const [state, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem('data')) | initialState)
-  localStorage.setItem('data', JSON.stringify(initialState))
+  const [state, dispatch] = useReducer(reducer, initialState)
+  localStorage.setItem('data', JSON.stringify(state))
   
   return (
     <ProductsContext.Provider value={[state, dispatch]}>
